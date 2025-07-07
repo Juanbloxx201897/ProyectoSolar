@@ -18,19 +18,19 @@ public class EiAData {
     private String seriesId;
     private String name;
     private String period;      // e.g. "202401"
-    private Double value;       // e.g. 7034.2
-    public void setSeriesId(String series_id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSeriesId'");
-    }
-    public void setName(String name2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setName'");
-    }
-    public void setPeriod(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPeriod'");
-    }
+    private Double value;   
+        // e.g. 7034.2
+    public void setSeriesId(String seriesId) {
+            this.seriesId = seriesId;
+        }
+        
+    public void setName(String name) {
+            this.name = name;
+        }
+        
+    public void setPeriod(String period) {
+            this.period = period;
+        }
     public Long getId() {
         return id;
     }
@@ -52,7 +52,5 @@ public class EiAData {
     public void setValue(Double value) {
         this.value = value;
     }
-
-    // getters y setters...
     
 }
