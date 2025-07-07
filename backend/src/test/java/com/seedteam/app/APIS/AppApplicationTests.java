@@ -1,4 +1,4 @@
-package com.seedteam.app;
+package com.seedteam.app.APIS;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
