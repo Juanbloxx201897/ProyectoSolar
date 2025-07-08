@@ -2,14 +2,14 @@
 Define colores y estilos reutilizables*/
 :root {
     /* Paleta de colores para energía renovable */
-    --primary-green: #2d7d32;
+    --primary-green: black;
     --secondary-green: #4caf50;
     --light-green: #c8e6c9;
     --solar-yellow: #ffc107;
     --wind-blue: #2196f3;
     --hydro-cyan: #00bcd4;
     --dark-bg: #1a1a1a;
-    --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-bg: linear-gradient(	#0288D1 0%, 	#4CAF50 100%);
 }
 
 /*ESTILOS GLOBALES
@@ -63,7 +63,9 @@ body {
 
 /*SECCIÓN PORTADA PRINCIPAL*/
 .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+    background-color: linear-gradient(rgb(105, 212, 78)
+,#0288D1 0%
+), 
                 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234caf50;stop-opacity:0.8" /><stop offset="100%" style="stop-color:%232196f3;stop-opacity:0.8" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23grad1)"/></svg>');
     background-size: cover;
     background-position: center;
@@ -96,13 +98,14 @@ body {
     border-radius: 50px;
     padding: 20px;
     margin: 50px auto;
-    max-width: 800px;
+    max-width: 900px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+   
 }
 
 .search-form {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     align-items: center;
     flex-wrap: wrap;
 }
