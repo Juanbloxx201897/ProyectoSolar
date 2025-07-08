@@ -24,6 +24,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version> <!-- Última versión hasta julio 2025 -->
+        </dependency>
+
         <!-- Spring Data JDBC (optional if using JDBC template) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,4 +71,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
