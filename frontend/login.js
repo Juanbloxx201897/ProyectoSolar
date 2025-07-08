@@ -22,30 +22,41 @@ function handleAction() {
         return;
     }
 
-    // Obtener usuarios guardados
-    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const url = isLogin
+        ? "http://localhost:8080/model/Usuario/login"
+        : "http://localhost:8080/model/Usuario/registro";
 
-    if (isLogin) {
-        // --- Login ---
-        const userFound = users.find(user => user.username === username && user.password === password);
-
-        if (userFound) {
-            errorMsg.textContent = "";
-            window.location.href = "index.html"; // Redirigir al inicio
-        } else {
-            errorMsg.textContent = "Usuario o contraseña incorrectos.";
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error en la petición");
         }
-    } else {
-        // --- Registro ---
-        const userExists = users.some(user => user.username === username);
-
-        if (userExists) {
-            errorMsg.textContent = "El nombre de usuario ya está registrado.";
+        return response.text();
+    })
+    .then(data => {
+        if (isLogin) {
+            if (data === "Login correcto") {
+                window.location.href = "index.html"; // Redirige a la página principal
+            } else {
+                errorMsg.textContent = "Usuario o contraseña incorrectos.";
+            }
         } else {
-            users.push({ username, password });
-            localStorage.setItem('users', JSON.stringify(users));
-            errorMsg.textContent = "¡Registro exitoso! Ahora puedes iniciar sesión.";
-            toggleForm(); // Cambiar al formulario de login
+            if (data === "Registro exitoso") {
+                errorMsg.textContent = "¡Registro exitoso! Ahora puedes iniciar sesión.";
+                toggleForm();
+            } else {
+                errorMsg.textContent = data; // Por ejemplo: "Usuario ya existe"
+            }
         }
-    }
+    })
+    .catch(error => {
+        console.error("Error al conectar con el servidor:", error);
+        errorMsg.textContent = "Error al conectar con el servidor.";
+    });
 }
