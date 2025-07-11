@@ -54,7 +54,9 @@
             <div class="hero-content animate__animated animate__fadeInUp">
                 <h1><i class="fas fa-bolt"></i> Energia renovable</h1>
                 <p>Visualiza y gestiona datos globales de energía renovable para un futuro sostenible</p>
-               
+                <a href="#buscar" class="btn btn-success btn-lg">
+                    <i class="fas fa-search"></i> Explorar Datos
+                </a>
             </div>
         </div>
     </section>
@@ -207,7 +209,79 @@
     </section>
 
     <!-- Data Table Section -->
-    
+    <section class="container">
+        <div class="energy-cards animate__animated animate__fadeInUp">
+            <h2 class="text-center mb-4" style="color: var(--primary-green);">
+                <i class="fas fa-table"></i> Tabla de Datos Detallada
+            </h2>
+            
+            <div class="data-table">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-flag"></i> País</th>
+                            <th><i class="fas fa-globe"></i> Región</th>
+                            <th><i class="fas fa-bolt"></i> Tipo Energía</th>
+                            <th><i class="fas fa-chart-line"></i> Producción (TWh)</th>
+                            <th><i class="fas fa-percentage"></i> % del Total</th>
+                            <th><i class="fas fa-calendar"></i> Año</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody">
+                        <tr>
+                            <td>China</td>
+                            <td>Asia</td>
+                            <td><span class="badge" style="background-color: var(--solar-yellow);">Solar</span></td>
+                            <td>261.1</td>
+                            <td>30.7%</td>
+                            <td>2022</td>
+                        </tr>
+                        <tr>
+                            <td>Estados Unidos</td>
+                            <td>América</td>
+                            <td><span class="badge" style="background-color: var(--wind-blue);">Eólica</span></td>
+                            <td>380.1</td>
+                            <td>29.9%</td>
+                            <td>2022</td>
+                        </tr>
+                        <tr>
+                            <td>Brasil</td>
+                            <td>América</td>
+                            <td><span class="badge" style="background-color: var(--hydro-cyan);">Hidroeléctrica</span></td>
+                            <td>362.8</td>
+                            <td>8.3%</td>
+                            <td>2022</td>
+                        </tr>
+                        <tr>
+                            <td>India</td>
+                            <td>Asia</td>
+                            <td><span class="badge" style="background-color: var(--solar-yellow);">Solar</span></td>
+                            <td>75.0</td>
+                            <td>8.8%</td>
+                            <td>2022</td>
+                        </tr>
+                        <tr>
+                            <td>Alemania</td>
+                            <td>Europa</td>
+                            <td><span class="badge" style="background-color: var(--wind-blue);">Eólica</span></td>
+                            <td>132.7</td>
+                            <td>10.4%</td>
+                            <td>2022</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-3">
+                <button class="btn btn-success" onclick="loadMoreData()">
+                    <i class="fas fa-plus"></i> Cargar Más Datos
+                </button>
+                <button class="btn btn-outline-success ms-2" onclick="exportData()">
+                    <i class="fas fa-download"></i> Exportar CSV
+                </button>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
