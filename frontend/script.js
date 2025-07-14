@@ -574,11 +574,18 @@ function updateEnergyCards() {
 // INICIALIZACIÓN FINAL
 // ==============================================
 // Ejecutar funciones adicionales cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        animateCounters();
-        updateEnergyCards();
-    }, 1000);
+document.addEventListener("DOMContentLoaded", () => {
+    
+    fetch("http://localhost:8080/energia/estadisticas")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("promedioGdp").textContent = data.promedio_gdp.toFixed(2);
+            document.getElementById("promedioEnergia").textContent = data.promedio_energia.toFixed(2);
+            document.getElementById("totalRegistros").textContent = data.total_registros;
+        })
+        .catch(error => {
+            console.error("Error al obtener estadísticas:", error);
+        });
 });
 
 // Exportar funciones para uso global
