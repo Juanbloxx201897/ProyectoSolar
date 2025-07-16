@@ -1,104 +1,114 @@
-// Variables globales
-let allData = [];
-let displayedData = [];
-let currentPage = 1;
-const itemsPerPage = 10;
-let chartInstances = {};
+//variables globales
+let allData = []; // Almacena todos los datos de energía recibidos del backend
+let displayedData = []; // Almacena los datos que se están mostrando en la tabla
+let currentPage = 1; // Página actual (para la paginación)
+const itemsPerPage = 10; // Cantidad de filas que se muestran por página
+let chartInstances = {}; // Objeto que guarda las instancias de los gráficos generados por Chart.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  setupLogin();
-  loadDataFromBackend();
-  setupShowMoreButton();
-  setupSearchForm();
+  setupLogin(); // Configura el evento de login (modal básico)
+  loadDataFromBackend(); // Obtiene los datos desde el backend
+  setupShowMoreButton(); // Asigna comportamiento al botón "Mostrar más"
+  setupSearchForm(); // Asigna comportamiento al formulario de búsqueda
 });
 
-// Login simple (se puede mejorar con backend real)
-function setupLogin() {
-  document.getElementById('loginForm')
-    .addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('userEmail').value;
-      const modalBody = document.getElementById('loginModal').querySelector('.modal-body');
-      modalBody.innerHTML = `<p>Bienvenido, <strong>${email}</strong>!</p>`;
-    });
+function loadDataFromBackend() {
+  fetch('http://localhost:8080/energia/listado') // Hace petición al endpoint del backend
+    .then(res => res.json()) // Convierte respuesta a JSON
+    .then(data => {
+      allData = data; // Guarda todos los datos obtenidos
+      displayedData = [...allData]; // Inicializa los datos mostrados con todos los datos
+      renderData(); // Muestra la tabla con los datos
+      renderStats(); // Calcula estadísticas globales
+      renderHeatMap(); // Genera el mapa de calor
+    })
+    .catch(err => console.error(err)); // Maneja errores de red
 }
 
-function loadDataFromBackend() {
-  fetch('http://localhost:8080/energia/listado')
-    .then(res => res.json())
-    .then(data => {
-      allData = data;
-      displayedData = [...allData];
-      renderData();
-      renderStats();
-      renderHeatMap();  // <--- Mapa de calor se genera tras cargar datos
-    })
-    .catch(err => console.error(err));
-}
 
 function renderData() {
   const tbody = document.getElementById('dataTableBody');
-  tbody.innerHTML = '';
-  const start = (currentPage - 1) * itemsPerPage;
-  const slice = displayedData.slice(start, start + itemsPerPage);
+  tbody.innerHTML = ''; // Limpia la tabla antes de llenarla
+
+  const start = (currentPage - 1) * itemsPerPage; // Índice de inicio de la página actual
+  const slice = displayedData.slice(start, start + itemsPerPage); // Obtiene los datos de la página actual
+
+  // Recorre los datos y los agrega como filas a la tabla
   slice.forEach(item => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${item.country}</td><td>${item.year}</td>
+    tr.innerHTML = `
+      <td>${item.country}</td>
+      <td>${item.year}</td>
       <td>${item.population ?? 'No disponible'}</td>
       <td>${item.gdp ?? 'No disponible'}</td>
       <td>${item.primaryEnergyConsumption ?? 'No disponible'}</td>`;
     tbody.appendChild(tr);
   });
+
+  // Muestra u oculta el botón "Mostrar más" según haya más datos
   document.getElementById('showMoreBtn').style.display =
     (start + itemsPerPage < displayedData.length) ? 'block' : 'none';
 }
 
+
 function setupShowMoreButton() {
   document.getElementById('showMoreBtn')
     .addEventListener('click', () => {
-      currentPage++;
-      renderData();
+      currentPage++; // Aumenta la página actual
+      renderData(); // Vuelve a renderizar la tabla con más datos
     });
 }
+
 
 function setupSearchForm() {
   document.getElementById('searchForm')
     .addEventListener('submit', e => {
-      e.preventDefault();
-      currentPage = 1;
-      applyFilters();
+      e.preventDefault(); // Evita recargar la página al enviar
+      currentPage = 1; // Reinicia la paginación al hacer una nueva búsqueda
+      applyFilters(); // Aplica los filtros
     });
 }
 
+
 function applyFilters() {
-  const term = document.getElementById('searchInput').value.toLowerCase();
-  const year = document.getElementById('year').value;
+  const term = document.getElementById('searchInput').value.toLowerCase(); // Término de búsqueda (país)
+  const year = document.getElementById('year').value; // Año seleccionado
+
+  // Filtra los datos según el país y el año
   displayedData = allData.filter(item =>
     item.country.toLowerCase().includes(term) &&
     (!year || item.year.toString() === year)
   );
-  renderData();
+
+  renderData(); // Muestra los datos filtrados
 }
+
 
 function exportData() {
   const rows = [
-    ['País','Año','Población','PIB','ConsumoPrimario'],
+    ['País','Año','Población','PIB','ConsumoPrimario'], // Encabezados del CSV
     ...displayedData.map(d => [
       d.country, d.year, d.population ?? '', d.gdp ?? '', d.primaryEnergyConsumption ?? ''
     ])
   ];
+
+  // Crea el archivo CSV
   const csv = rows.map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type:'text/csv' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'energia.csv';
-  link.click();
+  link.click(); // Inicia la descarga del archivo
 }
 
+
 function renderStats() {
-  const total = allData.length;
-  const avgGdp = average(allData.map(d => d.gdp));
-  const avgEnergy = average(allData.map(d => d.primaryEnergyConsumption));
+  const total = allData.length; // Total de registros
+  const avgGdp = average(allData.map(d => d.gdp)); // Promedio del PIB
+  const avgEnergy = average(allData.map(d => d.primaryEnergyConsumption)); // Promedio de consumo energético
+
+  // Inserta la tarjeta con los resultados
   document.getElementById('statsContainer').innerHTML = `
     <div class="card shadow p-4">
       <h4 class="mb-3">📊 Estadísticas Globales (CSV + EIA)</h4>
@@ -108,44 +118,62 @@ function renderStats() {
     </div>`;
 }
 
+
+// Función de ayuda para calcular promedios
 function average(arr) {
-  const vals = arr.filter(v => typeof v === 'number');
+  const vals = arr.filter(v => typeof v === 'number'); // Elimina valores nulos o no numéricos
   return vals.length ? vals.reduce((a,b) => a + b, 0) / vals.length : 0;
 }
 
+
 function generateChart(type) {
   const ctx = document.getElementById(`${type}Chart`).getContext('2d');
-  const slice = displayedData.slice(0, 1000);
+  const slice = displayedData.slice(0, 1000); // Limita a 1000 registros para rendimiento
 
-  if (chartInstances[type]) chartInstances[type].destroy();
+  if (chartInstances[type]) chartInstances[type].destroy(); // Elimina gráfico anterior si existe
 
   if (type === 'pie') {
+    // Agrupa datos por país para gráfico tipo pie
     const grouped = {};
     slice.forEach(d => grouped[d.country] = (grouped[d.country] || 0) + (d.primaryEnergyConsumption || 0));
+    
     chartInstances[type] = new Chart(ctx, {
       type: 'pie',
       data: {
         labels: Object.keys(grouped),
-        datasets: [{ data: Object.values(grouped), backgroundColor: generateColors(Object.keys(grouped).length) }]
+        datasets: [{
+          data: Object.values(grouped),
+          backgroundColor: generateColors(Object.keys(grouped).length)
+        }]
       }
     });
   } else {
+    // Agrupa datos por año para gráfico tipo línea
     const byYear = {};
     slice.forEach(d => byYear[d.year] = (byYear[d.year] || 0) + (d.primaryEnergyConsumption || 0));
     const years = Object.keys(byYear).sort();
+
     chartInstances[type] = new Chart(ctx, {
       type: 'line',
       data: {
         labels: years,
-        datasets: [{ label: 'Consumo primario', data: years.map(y => byYear[y]), borderColor:'#2196f3', tension:0.3 }]
+        datasets: [{
+          label: 'Consumo primario',
+          data: years.map(y => byYear[y]),
+          borderColor: '#2196f3',
+          tension: 0.3
+        }]
       }
     });
   }
 }
 
+
+// Generador de colores aleatorios HSL para gráficos
 function generateColors(n) {
   return Array.from({length: n}, (_, i) => `hsl(${(i * 360 / n)},70%,50%)`);
 }
+
 
 /**
  * Mapa de calor con Leaflet y Leaflet.heat
