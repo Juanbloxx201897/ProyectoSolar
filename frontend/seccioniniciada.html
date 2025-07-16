@@ -30,19 +30,21 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top bg-light shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="#"><i class="fas fa-bolt" style="color: #eba120f9;"></i>
+       <a class="navbar-brand" href="#"><i class="fas fa-bolt" style="color: #eba120f9;"></i>
  EnergyVision</a>
       <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="#datos">Datos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#graficos">Gráficos</a></li>
           <li class="nav-item"><a class="nav-link" href="#buscar">Buscar</a></li>
           <li class="nav-item">
-            <button class="btn btn-outline-primary" onclick="window.location.href='login.html'">
-              <i class="fas fa-user"></i> Iniciar Sesión
+            <button class="btn btn-outline-primary" onclick="window.location.href='index.html'">
+            <i class="fas fa-user"></i> Cerrar Sesión
             </button>
 
+         
           </li>
         </ul>
       </div>
@@ -71,7 +73,7 @@
     <div class="container">
       <div class="hero-content animate__animated animate__fadeInUp">
         <h1><i class="fas fa-bolt"></i> Energía Renovable</h1>
-        <p>Visualiza y gestiona datos globales de energía renovable para un futuro sostenible</p>
+        <p>Visualiza y gestiona datos globales sobre Energia Renovable para un futuro sostenible</p>
         <a href="#buscar" class="btn btn-success btn-lg"><i class="fas fa-search"></i> Explorar Datos</a>
       </div>
     </div>
@@ -106,13 +108,39 @@
       </table>
       <div class="d-flex justify-content-between mb-4">
         <button id="showMoreBtn" class="btn btn-outline-success">Mostrar más</button>
-       
+        <button class="btn btn-outline-success" onclick="exportData()"><i class="fas fa-download"></i> Exportar CSV</button>
       </div>
     </div>
   </section>
 
- 
-  
+  <!-- Gráficos -->
+  <section id="graficos" class="container mt-5">
+    <h2 class="text-center mb-4"><i class="fas fa-chart-bar"></i> Visualización de Datos</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow p-3">
+          <canvas id="pieChart"></canvas>
+          <button class="btn btn-outline-success mt-3 w-100" onclick="generateChart('pie')">
+            <i class="fas fa-play"></i> Circular
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow p-3">
+          <canvas id="lineChart"></canvas>
+          <button class="btn btn-outline-primary mt-3 w-100" onclick="generateChart('line')">
+            <i class="fas fa-play"></i> Línea
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mapa de Calor -->
+  <section id="mapaCalor" class="container mt-5">
+    <h2 class="text-center mb-4"><i class="fas fa-map"></i> Mapa de Calor de Consumo Energético</h2>
+    <div id="heatmap"></div>
+  </section>
 
   <!-- Estadísticas Globales -->
   <section id="estadisticas" class="container mt-5">

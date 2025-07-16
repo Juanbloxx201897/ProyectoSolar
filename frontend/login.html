@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión / Registro - Energía Viva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energía Viva - Autenticación</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
+  <section class="login-container">
+    <h1 class="main-title">⚡ Energía Renovable</h1>
+    <div class="tab-buttons">
+      <button onclick="showTab('login')" id="loginTab" class="active-tab">Iniciar Sesión</button>
+      <button onclick="showTab('register')" id="registerTab">Registrarse</button>
+    </div>
 
-    <section class="login-container">
-        <h1>Energía Solar</h1>
-        <h2 id="formTitle">Iniciar Sesión</h2>
+    <div class="login-card">
+      <!-- Login -->
+      <div id="loginForm" class="tab-content active-tab-content">
+        <input type="text" id="username" placeholder="Nombre de usuario">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="handleLogin()" class="login-btn">Ingresar</button>
+      </div>
 
-        <div class="login-card">
-            <input type="text" id="username" placeholder="Nombre de usuario">
-            <input type="password" id="password" placeholder="Contraseña">
-            <button onclick="handleAction()" class="login-btn" id="actionBtn">Ingresar</button>
-            
-            <p class="switch-msg">
-                ¿No tienes cuenta? <a href="#" onclick="toggleForm()">Regístrate</a>
-            </p>
-            
+      <!-- Registro -->
+      <div id="registerForm" class="tab-content">
+        <input type="text" id="newUsername" placeholder="Nuevo usuario">
+        <input type="password" id="newPassword" placeholder="Nueva contraseña">
+        <button onclick="handleRegister()" class="register-btn">Registrar</button>
+      </div>
 
-            <p id="errorMsg" class="error-msg"></p>
-        </div>
-    </section>
+      <p id="errorMsg" class="error-msg"></p>
+    </div>
+  </section>
 
-    <script src="login.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
+

@@ -160,18 +160,68 @@ function renderHeatMap() {
 
   // Coordenadas aproximadas por país (amplía esta lista según tu dataset)
   const countryCoords = {
-    "United States": [37.0902, -95.7129],
-    "China": [35.8617, 104.1954],
-    "India": [20.5937, 78.9629],
-    "Germany": [51.1657, 10.4515],
-    "Brazil": [-14.2350, -51.9253],
-    "Mexico": [23.6345, -102.5528],
-    "Russia": [61.5240, 105.3188],
-    "France": [46.2276, 2.2137],
-    "United Kingdom": [55.3781, -3.4360],
-    "Canada": [56.1304, -106.3468],
-    // Agrega más si tienes datos
-  };
+      "United States": [37.0902, -95.7129, 12],    // 12% de energía renovable
+      "China": [35.8617, 104.1954, 10],            // 10% de energía renovable
+      "India": [20.5937, 78.9629, 22],             // 22% de energía renovable
+      "Germany": [51.1657, 10.4515, 47],           // 47% de energía renovable
+      "Brazil": [-14.2350, -51.9253, 83],          // 83% de energía renovable
+      "Mexico": [23.6345, -102.5528, 26],          // 26% de energía renovable
+      "Russia": [61.5240, 105.3188, 7],            // 7% de energía renovable
+      "France": [46.2276, 2.2137, 19],             // 19% de energía renovable
+      "United Kingdom": [55.3781, -3.4360, 48],    // 48% de energía renovable
+      "Canada": [56.1304, -106.3468, 66],          // 66% de energía renovable
+      "Australia": [-25.2744, 133.7751, 20],       // 20% de energía renovable
+      "Japan": [36.2048, 138.2529, 18],            // 18% de energía renovable
+      "South Korea": [35.9078, 127.7669, 6],       // 6% de energía renovable
+      "Italy": [41.8719, 12.5674, 33],             // 33% de energía renovable
+      "Spain": [40.4637, -3.7492, 45],             // 45% de energía renovable
+      "Argentina": [-38.4161, -63.6167, 33],       // 33% de energía renovable
+      "South Africa": [-30.5595, 22.9375, 7],      // 7% de energía renovable
+      "Egypt": [26.8206, 30.8025, 4],              // 4% de energía renovable
+      "Nigeria": [9.0820, 8.6753, 9],              // 9% de energía renovable
+      "Indonesia": [-0.7893, 113.9213, 15],        // 15% de energía renovable
+      "Saudi Arabia": [23.8859, 45.0792, 0],       // 0% de energía renovable (dependencia alta del petróleo)
+      "Turkey": [38.9637, 35.2433, 28],            // 28% de energía renovable
+      "Vietnam": [14.0583, 108.2772, 10],          // 10% de energía renovable
+      "Thailand": [15.8700, 100.9925, 12],         // 12% de energía renovable
+      "Pakistan": [30.3753, 69.3451, 7],           // 7% de energía renovable
+      "Colombia": [4.5709, -74.2973, 24],          // 24% de energía renovable
+      "Chile": [-35.6751, -71.5430, 46],           // 46% de energía renovable
+      "Iran": [32.4279, 53.6880, 12],              // 12% de energía renovable
+      "Malaysia": [4.2105, 101.9758, 6],           // 6% de energía renovable
+      "Kenya": [-1.2921, 36.8219, 70],             // 70% de energía renovable
+      "Peru": [-9.19, -75.0152, 28],               // 28% de energía renovable
+      "Poland": [51.9194, 19.1451, 13],            // 13% de energía renovable
+      "Ukraine": [48.3794, 31.1656, 6],            // 6% de energía renovable
+      "Belgium": [50.8503, 4.3517, 22],            // 22% de energía renovable
+      "Sweden": [60.1282, 18.6435, 54],            // 54% de energía renovable
+      "Norway": [60.4720, 8.4689, 98],             // 98% de energía renovable
+      "Finland": [61.9241, 25.7482, 41],           // 41% de energía renovable
+      "Denmark": [56.2639, 9.5018, 56],            // 56% de energía renovable
+      "Portugal": [39.3999, -8.2245, 57],          // 57% de energía renovable
+      "New Zealand": [-40.9006, 174.8860, 80],     // 80% de energía renovable
+      "Israel": [31.0461, 34.8516, 10],            // 10% de energía renovable
+      "Switzerland": [46.8182, 8.2275, 58],        // 58% de energía renovable
+      "Czech Republic": [49.8175, 15.4720, 13],    // 13% de energía renovable
+      "Austria": [47.5162, 14.5501, 33],           // 33% de energía renovable
+      "Hungary": [47.1625, 19.5033, 11],           // 11% de energía renovable
+      "Romania": [45.9432, 24.9668, 24],           // 24% de energía renovable
+      "Bulgaria": [42.7339, 25.4858, 22],          // 22% de energía renovable
+      "Croatia": [45.1, 15.2, 35],                 // 35% de energía renovable
+      "Serbia": [44.0165, 21.0059, 21],            // 21% de energía renovable
+      "Slovenia": [46.1511, 14.9955, 40],          // 40% de energía renovable
+      "Slovakia": [48.6690, 19.6990, 15],          // 15% de energía renovable
+      "Estonia": [58.5953, 25.0136, 12],           // 12% de energía renovable
+      "Latvia": [56.8796, 24.6032, 13],            // 13% de energía renovable
+      "Lithuania": [55.1694, 23.8813, 21],         // 21% de energía renovable
+      "Iceland": [64.9631, -19.0208, 100],         // 100% de energía renovable (mayoría geotérmica e hidroeléctrica)
+      "Luxembourg": [49.6117, 6.13, 25],           // 25% de energía renovable
+      "Monaco": [43.7333, 7.4167, 5],              // 5% de energía renovable
+      "San Marino": [43.9333, 12.45, 30],          // 30% de energía renovable
+      "Liechtenstein": [47.1415, 9.5215, 50],      // 50% de energía renovable
+      "Malta": [35.9375, 14.3754, 3],              // 3% de energía renovable
+      "Andorra": [42.5078, 1.5211, 10],            // 10% de energía renovable
+    };
 
   // Agregar puntos con intensidad basada en consumo energético
   const energyByCountry = {};
