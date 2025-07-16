@@ -1,7 +1,5 @@
-/*VARIABLES CSS PERSONALIZADAS
-Define colores y estilos reutilizables*/
+/* VARIABLES CSS PERSONALIZADAS */
 :root {
-    /* Paleta de colores para energía renovable */
     --primary-green: black;
     --secondary-green: #4caf50;
     --light-green: #c8e6c9;
@@ -9,11 +7,10 @@ Define colores y estilos reutilizables*/
     --wind-blue: #2196f3;
     --hydro-cyan: #00bcd4;
     --dark-bg: #1a1a1a;
-    --gradient-bg: linear-gradient(	#0288D1 0%, 	#4CAF50 100%);
+    --gradient-bg: linear-gradient(#0288D1 0%, #4CAF50 100%);
 }
 
-/*ESTILOS GLOBALES
-Configuración básica para todo el sitio*/
+/* ESTILOS GLOBALES */
 * {
     margin: 0;
     padding: 0;
@@ -27,33 +24,28 @@ body {
     color: #333;
 }
 
-/*ESTILOS DE LA BARRA DE NAVEGACIÓN*/
+/* NAVBAR */
 .navbar {
-    /* Fondo semi-transparente con efecto de cristal */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
 }
 
 .navbar-brand {
     font-weight: bold;
-    color: var(--primary-green) !important; /* !important sobrescribe otros estilos */
+    color: var(--primary-green) !important;
     font-size: 1.8rem;
 }
 
-/* Icono del logo en la marca */
 .navbar-brand i {
     color: var(--solar-yellow);
     margin-right: 10px;
 }
 
-/* Enlaces de navegación */
 .nav-link {
     color: var(--primary-green) !important;
     font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
+    transition: 0.3s;
 }
 
 .nav-link:hover {
@@ -61,22 +53,16 @@ body {
     transform: translateY(-2px);
 }
 
-/*SECCIÓN PORTADA PRINCIPAL*/
+/* HERO */
 .hero-section {
-    background-color: linear-gradient(rgb(105, 212, 78)
-,#0288D1 0%
-), 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234caf50;stop-opacity:0.8" /><stop offset="100%" style="stop-color:%232196f3;stop-opacity:0.8" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23grad1)"/></svg>');
+    background: linear-gradient(rgb(105, 212, 78), #0288D1 0%);
     background-size: cover;
     background-position: center;
     color: white;
     padding: 120px 0;
     text-align: center;
-    position: relative;
-    overflow: hidden;
 }
 
-/* Contenido principal de la portada principal*/
 .hero-content h1 {
     font-size: 3.5rem;
     font-weight: bold;
@@ -87,166 +73,72 @@ body {
 .hero-content p {
     font-size: 1.3rem;
     margin-bottom: 30px;
-    opacity: 0.9;/*transparente*/
 }
 
-/*BARRA DE BÚSQUEDA*/
+/* BUSCADOR */
 .search-container {
-    /* Contenedor con efecto de cristal */
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    padding: 20px;
-    margin: 50px auto;
+    background: white;
+    border-radius: 30px;
+    padding: 30px;
     max-width: 900px;
+    margin: auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-   
 }
 
 .search-form {
     display: flex;
-    gap: 20px;
-    align-items: center;
+    gap: 15px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.search-input {
-    flex: 1;
-    min-width: 250px;
-    border: 2px solid #e0e0e0;
-    border-radius: 25px;
+.search-input,
+.filter-select {
     padding: 12px 20px;
+    border-radius: 25px;
+    border: 2px solid #ddd;
     font-size: 1rem;
-    transition: all 0.3s ease;
 }
 
-.search-input:focus {
-    outline: none;
+.search-input:focus,
+.filter-select:focus {
     border-color: var(--secondary-green);
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    outline: none;
 }
 
-.search-filters {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.filter-select {
-    border: 2px solid #e0e0e0;
-    border-radius: 20px;
-    padding: 8px 15px;
-    background: white;
-    min-width: 120px;
-}
-
-/* Botón de búsqueda */
 .search-btn {
     background: var(--secondary-green);
+    color: white;
     border: none;
     border-radius: 25px;
     padding: 12px 25px;
-    color: white;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
-/* Efecto hover del botón de búsqueda */
 .search-btn:hover {
     background: var(--primary-green);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/*SECCIÓN DE TARJETAS DE ENERGÍA*/
-.energy-cards {
-    /* Contenedor principal con efecto de cristal */
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px;
-    margin: 30px 0;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* Tarjetas individuales de energía */
-.energy-card {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border-left: 5px solid var(--secondary-green);
-}
-
-.energy-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* Variaciones de color para diferentes tipos de energía */
-.energy-card.solar {
-    border-left-color: var(--solar-yellow);
-}
-
-.energy-card.wind {
-    border-left-color: var(--wind-blue);
-}
-
-.energy-card.hydro {
-    border-left-color: var(--hydro-cyan);
-}
-
-.card-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
-
-.card-icon.solar {
-    color: var(--solar-yellow);
-}
-
-.card-icon.wind {
-    color: var(--wind-blue);
-}
-
-.card-icon.hydro {
-    color: var(--hydro-cyan);
-}
-
-/*CONTENEDOR DE GRÁFICOS*/
-.chart-container {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    margin: 20px 0;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Data Table */
+/* TABLA */
 .data-table {
     background: white;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-}
-
-.table {
-    margin: 0;
+    margin: 40px 0;
+    padding: 20px;
 }
 
 .table thead th {
     background: var(--secondary-green);
     color: white;
-    border: none;
     padding: 15px;
     font-weight: 600;
+    border: none;
 }
 
 .table tbody td {
@@ -256,33 +148,84 @@ body {
 
 .table tbody tr:hover {
     background-color: var(--light-green);
-    transition: all 0.3s ease;
 }
 
-/* Footer */
+/* BOTONES DE TABLA */
+.table-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#showMoreBtn,
+.btn-export {
+    background: var(--secondary-green);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    border: none;
+    transition: 0.3s;
+}
+
+#showMoreBtn:hover,
+.btn-export:hover {
+    background: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* GRÁFICOS */
+.chart-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ESTADÍSTICAS GLOBALES */
+#estadisticas {
+    margin-top: 50px;
+}
+
+#estadisticas .card {
+    background: white;
+    border-left: 5px solid var(--secondary-green);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+#estadisticas h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: var(--secondary-green);
+}
+
+/* FOOTER */
 .footer {
     background: var(--dark-bg);
     color: white;
     padding: 40px 0;
     margin-top: 50px;
-}
-
-.footer h5 {
-    color: var(--secondary-green);
-    margin-bottom: 15px;
+    text-align: center;
 }
 
 .footer a {
     color: #ccc;
     text-decoration: none;
-    transition: color 0.3s ease;
 }
 
 .footer a:hover {
     color: var(--secondary-green);
 }
 
-/* Responsive Design */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .hero-content h1 {
         font-size: 2.5rem;
@@ -290,52 +233,9 @@ body {
 
     .search-form {
         flex-direction: column;
-        align-items: stretch;
     }
 
-    .search-input {
-        min-width: 100%;
+    .chart-container {
+        min-height: auto;
     }
-
-    .search-filters {
-        justify-content: center;
-    }
-
-    .energy-card {
-        text-align: center;
-    }
-}
-
-/* Loading Animation */
-.loading {
-    display: none;
-    text-align: center;
-    padding: 20px;
-}
-
-.spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--secondary-green);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Alert Styles */
-.custom-alert {
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.alert-success {
-    background-color: var(--light-green);
-    color: var(--primary-green);
 }

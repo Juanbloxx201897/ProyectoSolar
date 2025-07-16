@@ -1,343 +1,194 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energia renovable - Transición Energética Justa</title>
-    <!--Enlaces a bibliotecas externas CSS -->
-    <!--Bootstrap: Framework CSS para diseño responsivo y componentes -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <!--Font Awesome: Iconos vectoriales -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!--Animate.css: Animaciones CSS predefinidas -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <!-- CSS personalizado -->
-    <link rel="stylesheet" href="Style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Energia renovable - Transición Energética Justa</title>
+  <!-- Bootstrap, FontAwesome, Animate.css -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="Style.css" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link 
+    rel="stylesheet" 
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
+    crossorigin=""/>
+  
+  <style>
+    /* Altura para el mapa de calor */
+    #heatmap {
+      height: 500px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-    <i class="fas fa-sun" style="color: rgb(228, 228, 66);"></i> Energia Solar
-</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top bg-light shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="fas fa-sun" style="color: #ffc107;"></i> Energia Solar</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#datos">Datos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#graficos">Gráficos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#buscar">Buscar</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+              <i class="fas fa-user"></i> Iniciar Sesión
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#inicio">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#datos">Datos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#graficos">Gráficos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#buscar">Buscar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#perfil"><i class="fas fa-user"></i> Perfil</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-                    </li>
-                    <li>
-                        <a class="nav-link" href="login.html"><i class="fas fa-user"></i> Iniciar Sesion</a>
-                    </li>
+  <!-- Modal Login -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="loginForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Iniciar Sesión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input id="userEmail" type="email" class="form-control mb-3" placeholder="Email" required>
+          <input id="userPassword" type="password" class="form-control" placeholder="Contraseña" required>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">Entrar</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section id="inicio" class="hero-section pt-5 mt-5 text-center bg-light">
+    <div class="container">
+      <div class="hero-content animate__animated animate__fadeInUp">
+        <h1><i class="fas fa-bolt"></i> Energía Solar</h1>
+        <p>Visualiza y gestiona datos globales de energía solar para un futuro sostenible</p>
+        <a href="#buscar" class="btn btn-success btn-lg"><i class="fas fa-search"></i> Explorar Datos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buscar -->
+  <section id="buscar" class="container mt-5 pt-5">
+    <div class="search-container animate__animated animate__fadeInUp">
+      <h3 class="text-center mb-4 text-success"><i class="fas fa-search"></i> Búsqueda Avanzada</h3>
+      <form id="searchForm" class="d-flex flex-wrap justify-content-center gap-3">
+        <input id="searchInput" class="form-control w-50" placeholder="Buscar país..." />
+        <select id="year" class="form-select w-auto">
+          <option value="">Año</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+        </select>
+        <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Buscar</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Datos Detallados -->
+  <section id="datos" class="container mt-5">
+    <div class="data-table animate__animated animate__fadeInUp">
+      <h2 class="text-center mb-4"><i class="fas fa-table"></i> Datos Detallados</h2>
+      <table class="table table-bordered table-striped" id="dataTable">
+        <thead class="table-success">
+          <tr><th>País</th><th>Año</th><th>Población</th><th>PIB</th><th>Consumo Energ. Primario</th></tr>
+        </thead>
+        <tbody id="dataTableBody"></tbody>
+      </table>
+      <div class="d-flex justify-content-between mb-4">
+        <button id="showMoreBtn" class="btn btn-outline-success">Mostrar más</button>
+        <button class="btn btn-outline-success" onclick="exportData()"><i class="fas fa-download"></i> Exportar CSV</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gráficos -->
+  <section id="graficos" class="container mt-5">
+    <h2 class="text-center mb-4"><i class="fas fa-chart-bar"></i> Visualización de Datos</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow p-3">
+          <canvas id="pieChart"></canvas>
+          <button class="btn btn-outline-success mt-3 w-100" onclick="generateChart('pie')">
+            <i class="fas fa-play"></i> Circular
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow p-3">
+          <canvas id="lineChart"></canvas>
+          <button class="btn btn-outline-primary mt-3 w-100" onclick="generateChart('line')">
+            <i class="fas fa-play"></i> Línea
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mapa de Calor -->
+  <section id="mapaCalor" class="container mt-5">
+    <h2 class="text-center mb-4"><i class="fas fa-map"></i> Mapa de Calor de Consumo Energético</h2>
+    <div id="heatmap"></div>
+  </section>
+
+  <!-- Estadísticas Globales -->
+  <section id="estadisticas" class="container mt-5">
+    <div id="statsContainer"></div>
+  </section>
+
+  <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5><i class="fas fa-leaf"></i> EnergyVision</h5>
+                <p>Promoviendo la transición hacia un futuro energético sostenible y justo a través de datos y tecnología.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#datos">Datos</a></li>
+                    <li><a href="#graficos">Gráficos</a></li>
+                    <li><a href="#buscar">Buscar</a></li>
                 </ul>
             </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="inicio" class="hero-section">
-        <div class="container">
-            <div class="hero-content animate__animated animate__fadeInUp">
-                <h1><i class="fas fa-bolt"></i> Energia Solar</h1>
-                <p>Visualiza y gestiona datos globales de energía solar para un futuro sostenible</p>
-                <a href="#buscar" class="btn btn-success btn-lg">
-                    <i class="fas fa-search"></i> Explorar Datos
-                </a>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <p><i class="fas fa-envelope"></i> santicastris@gmail.com</p> 
+                  <p><i class="fas fa-phone"></i> +57 304 358 9234</p>
+                <p><i class="fas fa-envelope"></i> juandavidgut@hotmail.com</p>
+                  <p><i class="fas fa-phone"></i> +57 300 889 5309</p>
+                <p><i class="fas fa-envelope"></i>juanpablomosalve454@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +57 324 484 9518</p>
+              
             </div>
         </div>
-    </section>
-
-    <!-- Search Section -->
-    <section id="buscar" class="container">
-        <div class="search-container animate__animated animate__fadeInUp">
-            <h3 class="text-center mb-4" style="color: var(--primary-green);">
-                <i class="fas fa-search"></i> Búsqueda Avanzada de Datos Energéticos
-            </h3>
-            <form class="search-form" id="searchForm">
-                <input type="text" class="search-input" id="searchInput" placeholder="Buscar por país, región o tipo de energía...">
-                
-                <div class="search-filters">
-                    <select class="filter-select" id="energyType">
-                        <option value="">Tipo de Energía</option>
-                        <option value="solar">Solar</option>
-                        <option value="wind">Eólica</option>
-                        <option value="hydro">Hidroeléctrica</option>
-                        <option value="geothermal">Geotérmica</option>
-                        <option value="biomass">Biomasa</option>
-                    </select>
-                    
-                    <select class="filter-select" id="region">
-                        <option value="">Región</option>
-                        <option value="america">América</option>
-                        <option value="europe">Europa</option>
-                        <option value="asia">Asia</option>
-                        <option value="africa">África</option>
-                        <option value="oceania">Oceanía</option>
-                    </select>
-                    
-                    <select class="filter-select" id="year">
-                        <option value="">Año</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="search-btn">
-                    <i class="fas fa-search"></i> Buscar
-                </button>
-            </form>
+        <hr class="mt-4">
+        <div class="text-center">
+            <p>&copy; 2025 EnergyVision - Proyecto Final de bootcamp. Todos los derechos reservados.</p>
         </div>
+    </div>
+</footer>
 
-        <!-- Loading Animation -->
-        <div class="loading" id="loadingSpinner">
-            <div class="spinner"></div>
-            <p>Buscando datos...</p>
-        </div>
-
-        <!-- Search Results Alert -->
-        <div id="searchAlert" style="display: none;"></div>
-    </section>
-
-    <!-- Energy Cards Section -->
-    <section id="datos" class="container">
-        <div class="energy-cards animate__animated animate__fadeInUp">
-            <h2 class="text-center mb-4" style="color: var(--primary-green);">
-                <i class="fas fa-chart-line"></i> Datos de Energía solar a nivel global
-            </h2>
-            
-            <div class="row" id="energyCardsContainer">
-                <div class="col-md-4">
-                    <div class="energy-card solar">
-                        <div class="card-icon solar">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <h4>Energía Solar</h4>
-                        <p class="lead">850 TWh</p>
-                        <p>Producción global anual</p>
-                        <div class="progress mb-2">
-                            <div class="progress-bar" style="width: 85%; background-color: var(--solar-yellow);"></div>
-                        </div>
-                        <small class="text-muted">+15% respecto al año anterior</small>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="energy-card wind">
-                        <div class="card-icon wind">
-                            <i class="fas fa-wind"></i>
-                        </div>
-                        <h4>Energía Eólica</h4>
-                        <p class="lead">1,270 TWh</p>
-                        <p>Producción global anual</p>
-                        <div class="progress mb-2">
-                            <div class="progress-bar" style="width: 90%; background-color: var(--wind-blue);"></div>
-                        </div>
-                        <small class="text-muted">+12% respecto al año anterior</small>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="energy-card hydro">
-                        <div class="card-icon hydro">
-                            <i class="fas fa-water"></i>
-                        </div>
-                        <h4>Hidroeléctrica</h4>
-                        <p class="lead">4,370 TWh</p>
-                        <p>Producción global anual</p>
-                        <div class="progress mb-2">
-                            <div class="progress-bar" style="width: 95%; background-color: var(--hydro-cyan);"></div>
-                        </div>
-                        <small class="text-muted">+3% respecto al año anterior</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Charts Section -->
-    <section id="graficos" class="container">
-        <div class="energy-cards animate__animated animate__fadeInUp">
-            <h2 class="text-center mb-4" style="color: var(--primary-green);">
-                <i class="fas fa-chart-bar"></i> Visualización de Datos
-            </h2>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="chart-container">
-                        <div class="text-center">
-                            <i class="fas fa-chart-pie" style="font-size: 4rem; color: var(--secondary-green); margin-bottom: 20px;"></i>
-                            <h5>Distribución de Energía</h5>
-                            <p class="text-muted">Gráfico circular interactivo</p>
-                            <button class="btn btn-outline-success" onclick="generateChart('pie')">
-                                <i class="fas fa-play"></i> Generar Gráfico
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="chart-container">
-                        <div class="text-center">
-                            <i class="fas fa-chart-line" style="font-size: 4rem; color: var(--wind-blue); margin-bottom: 20px;"></i>
-                            <h5>Tendencia Temporal</h5>
-                            <p class="text-muted">Evolución por años</p>
-                            <button class="btn btn-outline-primary" onclick="generateChart('line')">
-                                <i class="fas fa-play"></i> Generar Gráfico
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Data Table Section -->
-    <section id="estadisticas">
-        <h2>Estadísticas Globales</h2>
-        <ul>
-            <li><strong>Total de registros:</strong> <span id="totalRegistros">Cargando...</span></li>
-            <li><strong>Promedio PIB:</strong> <span id="promedioGdp">Cargando...</span></li>
-            <li><strong>Promedio de consumo energético:</strong> <span id="promedioEnergia">Cargando...</span></li>
-        </ul>
-    </section>    
-
-    
-    <section class="container">
-        <div class="energy-cards animate__animated animate__fadeInUp">
-            <h2 class="text-center mb-4" style="color: var(--primary-green);">
-                <i class="fas fa-table"></i> Tabla de Datos Detallada
-            </h2>
-            
-            <div class="data-table">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-flag"></i> País</th>
-                            <th><i class="fas fa-globe"></i> Región</th>
-                            <th><i class="fas fa-bolt"></i> Tipo Energía</th>
-                            <th><i class="fas fa-chart-line"></i> Producción (TWh)</th>
-                            <th><i class="fas fa-percentage"></i> % del Total</th>
-                            <th><i class="fas fa-calendar"></i> Año</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTableBody">
-                        <tr>
-                            <td>China</td>
-                            <td>Asia</td>
-                            <td><span class="badge" style="background-color: var(--solar-yellow);">Solar</span></td>
-                            <td>261.1</td>
-                            <td>30.7%</td>
-                            <td>2022</td>
-                        </tr>
-                        <tr>
-                            <td>Estados Unidos</td>
-                            <td>América</td>
-                            <td><span class="badge" style="background-color: var(--wind-blue);">Eólica</span></td>
-                            <td>380.1</td>
-                            <td>29.9%</td>
-                            <td>2022</td>
-                        </tr>
-                        <tr>
-                            <td>Brasil</td>
-                            <td>América</td>
-                            <td><span class="badge" style="background-color: var(--hydro-cyan);">Hidroeléctrica</span></td>
-                            <td>362.8</td>
-                            <td>8.3%</td>
-                            <td>2022</td>
-                        </tr>
-                        <tr>
-                            <td>India</td>
-                            <td>Asia</td>
-                            <td><span class="badge" style="background-color: var(--solar-yellow);">Solar</span></td>
-                            <td>75.0</td>
-                            <td>8.8%</td>
-                            <td>2022</td>
-                        </tr>
-                        <tr>
-                            <td>Alemania</td>
-                            <td>Europa</td>
-                            <td><span class="badge" style="background-color: var(--wind-blue);">Eólica</span></td>
-                            <td>132.7</td>
-                            <td>10.4%</td>
-                            <td>2022</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="text-center mt-3">
-                <button class="btn btn-success" onclick="loadMoreData()">
-                    <i class="fas fa-plus"></i> Cargar Más Datos
-                </button>
-                <button class="btn btn-outline-success ms-2" onclick="exportData()">
-                    <i class="fas fa-download"></i> Exportar CSV
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5><i class="fas fa-leaf"></i> EnergyVision</h5>
-                    <p>Promoviendo la transición hacia un futuro energético sostenible y justo a través de datos y tecnología.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#datos">Datos</a></li>
-                        <li><a href="#graficos">Gráficos</a></li>
-                        <li><a href="#buscar">Buscar</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contacto</h5>
-                    <p><i class="fas fa-envelope"></i> santicastris@gmail.com</p> 
-                      <p><i class="fas fa-phone"></i> +57 304 358 9234</p>
-                    <p><i class="fas fa-envelope"></i> juandavidgut@hotmail.com</p>
-                      <p><i class="fas fa-phone"></i> +57 300 889 5309</p>
-                    <p><i class="fas fa-envelope"></i>juanpablomosalve454@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +57 324 484 9518</p>
-                  
-                </div>
-            </div>
-            <hr class="mt-4">
-            <div class="text-center">
-                <p>&copy; 2025 EnergyVision - Proyecto Final de bootcamp. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Chart.js for charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-
-    <!-- JavaScript personalizado -->
-    <script src="script.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <!-- Leaflet Heat Plugin -->
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+  
+  <script src="script.js"></script>
 </body>
 </html>
+

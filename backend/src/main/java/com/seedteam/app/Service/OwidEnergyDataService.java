@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.seedteam.app.model.OwidEnergyData;
 import com.seedteam.app.repository.OwidEnergyDataRepository;
 
-@Service
+@Service  // Esta es la anotación que asegura que Spring gestione la clase
 public class OwidEnergyDataService {
 
     @Autowired
@@ -111,5 +111,10 @@ public class OwidEnergyDataService {
         } catch (NumberFormatException e) {
             return null;
         }
+    }
+
+    // Método que faltaba: obtiene todos los datos
+    public List<OwidEnergyData> obtenerTodosLosDatos() {
+        return repo.findAll();  // Esto debería funcionar ahora
     }
 }
